@@ -19,7 +19,7 @@ public class VimeoPictureService {
 
     private static final String TOKEN = "87879038305545edc0a789f4d4733f6b";
 
-    public VimeoPicture getVimeoChannel(String id) {
+    public VimeoPicture getVimeoPicture(String id) {
         VimeoPicture res = null;
         String uri = String.format("https://api.vimeo.com/channels/%s", id);
 
@@ -35,7 +35,7 @@ public class VimeoPictureService {
         return res;
     }
 
-    public List<VimeoPicture> obtenerCommitsConToken(String id) {
+    public List<VimeoPicture> getVimeoPicturesConToken(String id) {
         List<VimeoPicture> res = new ArrayList<>();
         String uri = String.format("https://api.github.com/repos/%s/%s/commits", id);
         HttpHeaders headers = new HttpHeaders();

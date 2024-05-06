@@ -19,7 +19,7 @@ public class VimeoTexttrackService {
 
     private static final String TOKEN = "87879038305545edc0a789f4d4733f6b";
 
-    public VimeoTexttrack getVimeoChannel(String id) {
+    public VimeoTexttrack getVimeoTextrack(String id) {
         VimeoTexttrack res = null;
         String uri = String.format("https://api.vimeo.com/channels/%s", id);
 
@@ -35,7 +35,7 @@ public class VimeoTexttrackService {
         return res;
     }
 
-    public List<VimeoTexttrack> obtenerCommitsConToken(String id) {
+    public List<VimeoTexttrack> getVimeoTexttracksConToken(String id) {
         List<VimeoTexttrack> res = new ArrayList<>();
         String uri = String.format("https://api.github.com/repos/%s/%s/commits", id);
         HttpHeaders headers = new HttpHeaders();
