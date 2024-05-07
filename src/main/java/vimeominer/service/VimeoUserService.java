@@ -21,7 +21,7 @@ public class VimeoUserService {
 
     public VimeoUser getVimeoUser(String id) {
         VimeoUser res = null;
-        String uri = String.format("https://api.vimeo.com/channels/%s", id);
+        String uri = String.format("https://api.vimeo.com/users/%s", id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer" + TOKEN);
@@ -35,9 +35,9 @@ public class VimeoUserService {
         return res;
     }
 
-    public List<VimeoUser> getVimeoUsersConToken(String id) {
+    public List<VimeoUser> getVimeoUsers() {
         List<VimeoUser> res = new ArrayList<>();
-        String uri = String.format("https://api.github.com/repos/%s/%s/commits", id);
+        String uri = "https://api.vimeo.com/users";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + TOKEN);
         HttpEntity<VimeoUser> request = new HttpEntity<>(null, headers);

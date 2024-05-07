@@ -37,9 +37,9 @@ public class VimeoChannelService {
         return res;
     }
 
-    public List<VimeoChannel> getVimeoChannelsConToken(String id) {
+    public List<VimeoChannel> getVimeoChannels() {
         List<VimeoChannel> res = new ArrayList<>();
-        String uri = String.format("https://api.github.com/repos/%s/%s/commits", id);
+        String uri = "https://api.vimeo.com/channels";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + TOKEN);
         HttpEntity<VimeoChannel> request = new HttpEntity<>(null, headers);

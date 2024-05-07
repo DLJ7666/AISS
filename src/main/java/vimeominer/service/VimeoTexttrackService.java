@@ -19,29 +19,29 @@ public class VimeoTexttrackService {
 
     private static final String TOKEN = "87879038305545edc0a789f4d4733f6b";
 
-    public VimeoTexttrack getVimeoTextrack(String id) {
+    public VimeoTexttrack getVimeoTextrack(String videoId, String texttrackId) {
         VimeoTexttrack res = null;
-        String uri = String.format("https://api.vimeo.com/channels/%s", id);
+        String uri = String.format("https://api.vimeo.com/videos/%s/texttracks/%s", videoId, texttrackId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer" + TOKEN);
         HttpEntity<VimeoTexttrack> request = new HttpEntity<>(null, headers);
-
-        ResponseEntity<VimeoTexttrack> response = restTemplate.exchange(uri, HttpMethod.GET, request, VimeoTexttrack.class);
-
+        ResponseEntity<VimeoTexttrack> response = restTemplate.exchange(uri, HttpMethod.GET, request,
+                VimeoTexttrack.class);
         if(response.getBody() != null){
             res = response.getBody();
         }
         return res;
     }
 
-    public List<VimeoTexttrack> getVimeoTexttracksConToken(String id) {
+    public List<VimeoTexttrack> getVimeoTexttracks(String videoId) {
         List<VimeoTexttrack> res = new ArrayList<>();
-        String uri = String.format("https://api.github.com/repos/%s/%s/commits", id);
+        String uri = String.format("https://api.vimeo.com/videos/%s/texttracks", videoId);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + TOKEN);
         HttpEntity<VimeoTexttrack> request = new HttpEntity<>(null, headers);
-        ResponseEntity<VimeoTexttrack> response = restTemplate.exchange(uri, HttpMethod.GET, request, VimeoTexttrack.class);
+        ResponseEntity<VimeoTexttrack> response = restTemplate.exchange(uri, HttpMethod.GET, request,
+                VimeoTexttrack.class);
         if (response.getBody() != null) {
             res.add(response.getBody());
         }

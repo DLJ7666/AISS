@@ -18,10 +18,9 @@ public class VimeoCommentService {
 
     private static final String TOKEN = "87879038305545edc0a789f4d4733f6b";
 
-    public VimeoComment getVimeoComment(String id) {
+    public VimeoComment getVimeoComment(String videoId, String commentId) {
         VimeoComment res = null;
-        String uri = String.format("https://api.vimeo.com/channels/%s", id);
-
+        String uri = String.format("https://api.vimeo.com/videos/%s/comments/%s", videoId, commentId);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer" + TOKEN);
         HttpEntity<VimeoComment> request = new HttpEntity<>(null, headers);
@@ -34,9 +33,9 @@ public class VimeoCommentService {
         return res;
     }
 
-    public List<VimeoComment> getVimeoCommentsConToken(String id) {
+    public List<VimeoComment> getVimeoComments(String videoId) {
         List<VimeoComment> res = new ArrayList<>();
-        String uri = String.format("https://api.github.com/repos/%s/%s/commits", id);
+        String uri = String.format("https://api.vimeo.com/videos/%s/comments", videoId);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + TOKEN);
         HttpEntity<VimeoComment> request = new HttpEntity<>(null, headers);
