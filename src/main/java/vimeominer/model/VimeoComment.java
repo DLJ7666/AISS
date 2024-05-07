@@ -54,7 +54,7 @@ public class VimeoComment {
         this.user = user;
     }
 
-    public String getId() { return this.uri.split("/")[2]; }
+    public String getId() { return this.uri.split("/")[4]; }
 
     @Override
     public String toString() {

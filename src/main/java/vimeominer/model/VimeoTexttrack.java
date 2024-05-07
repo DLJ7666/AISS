@@ -40,7 +40,7 @@ public class VimeoTexttrack {
         this.language = language;
     }
 
-    public String getId() { return this.uri.split("/")[2]; }
+    public String getId() { return this.uri.split("/")[4]; }
 
     @Override
     public String toString() {
