@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import vimeominer.model.VimeoCommentList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,4 +46,42 @@ public class VimeoCommentService {
         }
         return res;
     }
+
+    public VimeoCommentList getVimeoCommentList(String videoId, Integer page) {
+        VimeoCommentList res = null;
+        Integer pagina = page;
+        if(pagina==null) {
+            pagina = 1;
+        }
+        String uri = String.format("https://api.vimeo.com/videos/%s/comments?page=%d", videoId, pagina);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + TOKEN);
+        HttpEntity<VimeoCommentList> request = new HttpEntity<>(null, headers);
+        ResponseEntity<VimeoCommentList> response = restTemplate.exchange(uri, HttpMethod.GET, request,
+                VimeoCommentList.class);
+        if (response.getBody() != null) {
+            res=response.getBody();
+        }
+        return res;
+    }
+
+    /*
+    public VimeoVideoList getVimeoVideoList(String channelId, Integer page) {
+        VimeoVideoList res = null;
+        Integer pagina = page;
+        if(pagina==null) {
+            pagina = 1;
+        }
+        String uri = String.format("https://api.vimeo.com/channels/%s/videos?page=%d", channelId, pagina);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + TOKEN);
+        HttpEntity<VimeoVideoList> request = new HttpEntity<>(null, headers);
+        ResponseEntity<VimeoVideoList> response = restTemplate.exchange(uri, HttpMethod.GET, request,
+                VimeoVideoList.class);
+        if (response.getBody() != null) {
+            res = response.getBody();
+        }
+        return res;
+    }
+     */
 }

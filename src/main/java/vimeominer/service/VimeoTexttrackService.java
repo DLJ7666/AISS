@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import vimeominer.model.VimeoTexttrackList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,24 @@ public class VimeoTexttrackService {
                 VimeoTexttrack.class);
         if (response.getBody() != null) {
             res.add(response.getBody());
+        }
+        return res;
+    }
+
+    public VimeoTexttrackList getVimeoTexttrackList(String videoId, Integer page) {
+        VimeoTexttrackList res = null;
+        Integer pagina = page;
+        if(pagina==null) {
+            pagina = 1;
+        }
+        String uri = String.format("https://api.vimeo.com/videos/%s/texttracks?page=%d", videoId, pagina);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + TOKEN);
+        HttpEntity<VimeoTexttrackList> request = new HttpEntity<>(null, headers);
+        ResponseEntity<VimeoTexttrackList> response = restTemplate.exchange(uri, HttpMethod.GET, request,
+                VimeoTexttrackList.class);
+        if (response.getBody() != null) {
+            res = response.getBody();
         }
         return res;
     }
