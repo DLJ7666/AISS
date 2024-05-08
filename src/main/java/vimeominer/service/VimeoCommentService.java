@@ -64,24 +64,4 @@ public class VimeoCommentService {
         }
         return res;
     }
-
-    /*
-    public VimeoVideoList getVimeoVideoList(String channelId, Integer page) {
-        VimeoVideoList res = null;
-        Integer pagina = page;
-        if(pagina==null) {
-            pagina = 1;
-        }
-        String uri = String.format("https://api.vimeo.com/channels/%s/videos?page=%d", channelId, pagina);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + TOKEN);
-        HttpEntity<VimeoVideoList> request = new HttpEntity<>(null, headers);
-        ResponseEntity<VimeoVideoList> response = restTemplate.exchange(uri, HttpMethod.GET, request,
-                VimeoVideoList.class);
-        if (response.getBody() != null) {
-            res = response.getBody();
-        }
-        return res;
-    }
-     */
 }
