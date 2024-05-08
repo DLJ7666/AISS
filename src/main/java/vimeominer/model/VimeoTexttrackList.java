@@ -59,6 +59,10 @@ public class VimeoTexttrackList {
         this.texttracks = texttracks;
     }
 
+    public Integer getNumPags() {
+        return getTotal()/getElemPorPag()+1;
+    }
+
     @Override
     public String toString() {
         return "VimeoTexttrackList{" +

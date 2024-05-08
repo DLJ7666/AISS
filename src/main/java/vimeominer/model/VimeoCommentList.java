@@ -68,4 +68,8 @@ public class VimeoCommentList {
                 ", comments=" + comments +
                 '}';
     }
+
+    public Integer getNumPags() {
+        return getTotal()/getElemPorPag()+1;
+    }
 }

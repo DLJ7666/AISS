@@ -68,4 +68,8 @@ public class VimeoVideoList {
                 ", videos=" + videos +
                 '}';
     }
+
+    public Integer getNumPags() {
+        return getTotal()/getElemPorPag()+1;
+    }
 }
