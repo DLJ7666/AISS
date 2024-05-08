@@ -1,18 +1,64 @@
 package vimeominer.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import videominer.model.Comment;
+import vimeominer.model.*;
+import vimeominer.service.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/vimeominer")
 public class VimeoController {
 
+    @Autowired
+    VimeoChannelService channelService;
+
+    @Autowired
+    VimeoCommentService commentService;
+
+    @Autowired
+    VimeoPictureService pictureLinkService;
+
+    @Autowired
+    VimeoTexttrackService captionService;
+
+    @Autowired
+    VimeoUserService userService;
+
+    @Autowired
+    VimeoVideoService videoService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void create(String vimeoChannelId) {
+        VimeoChannel channel = channelService.getVimeoChannel(vimeoChannelId);
+        VimeoVideoList videoList = videoService.getVimeoVideoList(vimeoChannelId, null);
+        List<VimeoVideo> videos = new ArrayList<>(videoList.getVideos());
+        for(int i=2; i<=videoList.getNumPags(); i++) {
+            videos.addAll(videoService.getVimeoVideoList(vimeoChannelId, i).getVideos());
+        }
+        for(VimeoVideo video:videos) {
+            VimeoTexttrackList captionList = captionService.getVimeoTexttrackList(video.getId(), null);
+            video.addTexttracks(captionList.getTexttracks());
+            for(int i=2; i<=captionList.getNumPags(); i++) {
+                video.addTexttracks(captionService.getVimeoTexttrackList(video.getId(), i).getTexttracks());
+            }
+            VimeoCommentList commentList = commentService.getVimeoCommentList(video.getId(), null);
+            List<VimeoComment> comments = new ArrayList<>(commentList.getComments());
+            for(int i=2; i<=commentList.getNumPags(); i++) {
+                comments.addAll(commentService.getVimeoCommentList(video.getId(), i).getComments());
+            }
+            for(VimeoComment comment:comments) {
+                Comment c = new Comment(comment.getText(), comment.getCreatedOn(), )
+            }
+        }
         /*
         GET /channels/{vimeoChannelId}
         new Channel c = ^
