@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import videominer.controller.CommentController;
 import videominer.model.Comment;
+import videominer.model.User;
 import vimeominer.model.*;
 import vimeominer.service.*;
 
@@ -56,7 +58,12 @@ public class VimeoController {
                 comments.addAll(commentService.getVimeoCommentList(video.getId(), i).getComments());
             }
             for(VimeoComment comment:comments) {
-                Comment c = new Comment(comment.getText(), comment.getCreatedOn(), )
+                VimeoUser user = userService.getVimeoUser(comment.getUser().getId());
+                VimeoPictureList pictureList = pictureLinkService.getVimeoPictureList(user.getId());
+                String pictureLink = !pictureList.getPictures().isEmpty() ?
+                        pictureList.getPictures().get(0).getLink():null;
+                User u = new User(user.getName(), user.getUserLink(), pictureLink);
+                Comment c = new Comment(comment.getText(), comment.getCreatedOn(), u);
             }
         }
         /*
