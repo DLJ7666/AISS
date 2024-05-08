@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -77,6 +78,10 @@ public class VimeoVideo {
         this.comments.add(comment);
     }
 
+    public void addComments(Collection<VimeoComment> comments) {
+        this.comments.addAll(comments);
+    }
+
     public List<VimeoTexttrack> getTexttracks() {
         return texttracks;
     }
@@ -87,6 +92,10 @@ public class VimeoVideo {
 
     public void addTexttrack(VimeoTexttrack texttrack) {
         this.texttracks.add(texttrack);
+    }
+
+    public void addTexttracks(Collection<VimeoTexttrack> texttracks) {
+        this.texttracks.addAll(texttracks);
     }
 
     public String getId() { return this.uri.split("/")[2]; }
