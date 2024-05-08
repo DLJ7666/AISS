@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import vimeominer.model.VimeoPictureList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,20 @@ public class VimeoPictureService {
                 VimeoPicture.class);
         if (response.getBody() != null) {
             res.add(response.getBody());
+        }
+        return res;
+    }
+
+    public VimeoPictureList getVimeoPictureList(String userId) {
+        VimeoPictureList res = null;
+        String uri = String.format("https://api.vimeo.com/user/%s/pictures", userId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + TOKEN);
+        HttpEntity<VimeoPictureList> request = new HttpEntity<>(null, headers);
+        ResponseEntity<VimeoPictureList> response = restTemplate.exchange(uri, HttpMethod.GET, request,
+                VimeoPictureList.class);
+        if (response.getBody() != null) {
+            res=response.getBody();
         }
         return res;
     }
