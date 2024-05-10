@@ -12,7 +12,8 @@ import videominer.model.Comment;
 import videominer.model.User;
 import videominer.model.Video;
 import vimeominer.model.*;
-import vimeominer.service.*;
+import vimeominer.videoservice.*;
+import vimeominer.vimeoservice.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,28 +40,43 @@ public class VimeoController {
     @Autowired
     VimeoVideoService videoService;
 
+    @Autowired
+    ChannelService videoChannelService;
+
+    @Autowired
+    VideoService videoVideoService;
+
+    @Autowired
+    UserService videoUserService;
+
+    @Autowired
+    CommentService videoCommentService;
+
+    @Autowired
+    CaptionService videoCaptionService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void create(String vimeoChannelId) {
+    public Channel create(String vimeoChannelId) {
         VimeoChannel channel = channelService.getVimeoChannel(vimeoChannelId);
-        Channel canal = new Channel(channel.getName(), channel.getDescription(), channel.getCreatedTime());
+        Channel canal = videoChannelService.creaCanal(channel.getName(), channel.getDescription(),
+                channel.getCreatedTime());
         VimeoVideoList videoList = videoService.getVimeoVideoList(vimeoChannelId, null);
         List<VimeoVideo> videos = new ArrayList<>(videoList.getVideos());
         for(int i=2; i<=videoList.getNumPags(); i++) {
             videos.addAll(videoService.getVimeoVideoList(vimeoChannelId, i).getVideos());
         }
         for(VimeoVideo video:videos) {
-            Video v = new Video();
-            v.setName(video.getName());
-            v.setDescription(video.getDescription());
-            v.setReleaseTime(video.getReleasedTime());
+            Video v = videoVideoService.creaCanal(canal.getId().toString(), video.getName(), video.getDescription(),
+                    video.getReleasedTime());
             VimeoTexttrackList captionList = captionService.getVimeoTexttrackList(video.getId(), null);
             video.addTexttracks(captionList.getTexttracks());
             for(int i=2; i<=captionList.getNumPags(); i++) {
                 video.addTexttracks(captionService.getVimeoTexttrackList(video.getId(), i).getTexttracks());
             }
             for(VimeoTexttrack caption:video.getTexttracks()) {
-                Caption subtitulo = new Caption(caption.getName(), caption.getLanguage());
+                Caption subtitulo = videoCaptionService.creaSubtitulo(canal.getId().toString(),
+                        v.getId().toString(),caption.getName(), caption.getLanguage());
             }
             VimeoCommentList commentList = commentService.getVimeoCommentList(video.getId(), null);
             List<VimeoComment> comments = new ArrayList<>(commentList.getComments());
@@ -71,9 +87,12 @@ public class VimeoController {
                 VimeoUser user = userService.getVimeoUser(comment.getUser().getId());
                 VimeoPictureList pictureList = pictureLinkService.getVimeoPictureList(user.getId());
                 String pictureLink = !pictureList.getPictures().isEmpty() ?
-                        pictureList.getPictures().get(0).getLink():null;
-                User usuario = new User(user.getName(), user.getUserLink(), pictureLink);
-                Comment comentario = new Comment(comment.getText(), comment.getCreatedOn(), usuario);
+                        pictureList.getPictures().get(0).getLink() : null;
+                User usuario = videoUserService.creaUsuario(user.getName(), user.getUserLink(), pictureLink);
+                Comment comentario = videoCommentService.creaComentario(canal.getId().toString(),
+                        v.getId().toString(), comment.getText(), comment.getCreatedOn(),
+                        usuario.getId().toString());
+
             }
         }
         /*
@@ -100,6 +119,7 @@ public class VimeoController {
             c.addVideo(v)
         }
         */
+        return canal;
     }
 
 }
