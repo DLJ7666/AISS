@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import videominer.controller.CommentController;
+import videominer.model.Caption;
+import videominer.model.Channel;
 import videominer.model.Comment;
 import videominer.model.User;
+import videominer.model.Video;
 import vimeominer.model.*;
 import vimeominer.service.*;
 
@@ -41,16 +43,24 @@ public class VimeoController {
     @PostMapping
     public void create(String vimeoChannelId) {
         VimeoChannel channel = channelService.getVimeoChannel(vimeoChannelId);
+        Channel canal = new Channel(channel.getName(), channel.getDescription(), channel.getCreatedTime());
         VimeoVideoList videoList = videoService.getVimeoVideoList(vimeoChannelId, null);
         List<VimeoVideo> videos = new ArrayList<>(videoList.getVideos());
         for(int i=2; i<=videoList.getNumPags(); i++) {
             videos.addAll(videoService.getVimeoVideoList(vimeoChannelId, i).getVideos());
         }
         for(VimeoVideo video:videos) {
+            Video v = new Video();
+            v.setName(video.getName());
+            v.setDescription(video.getDescription());
+            v.setReleaseTime(video.getReleasedTime());
             VimeoTexttrackList captionList = captionService.getVimeoTexttrackList(video.getId(), null);
             video.addTexttracks(captionList.getTexttracks());
             for(int i=2; i<=captionList.getNumPags(); i++) {
                 video.addTexttracks(captionService.getVimeoTexttrackList(video.getId(), i).getTexttracks());
+            }
+            for(VimeoTexttrack caption:video.getTexttracks()) {
+                Caption subtitulo = new Caption(caption.getName(), caption.getLanguage());
             }
             VimeoCommentList commentList = commentService.getVimeoCommentList(video.getId(), null);
             List<VimeoComment> comments = new ArrayList<>(commentList.getComments());
@@ -62,8 +72,8 @@ public class VimeoController {
                 VimeoPictureList pictureList = pictureLinkService.getVimeoPictureList(user.getId());
                 String pictureLink = !pictureList.getPictures().isEmpty() ?
                         pictureList.getPictures().get(0).getLink():null;
-                User u = new User(user.getName(), user.getUserLink(), pictureLink);
-                Comment c = new Comment(comment.getText(), comment.getCreatedOn(), u);
+                User usuario = new User(user.getName(), user.getUserLink(), pictureLink);
+                Comment comentario = new Comment(comment.getText(), comment.getCreatedOn(), usuario);
             }
         }
         /*
