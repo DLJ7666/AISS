@@ -1,4 +1,4 @@
-package vimeominer.service;
+package vimeominer.vimeoservice;
 
 import vimeominer.model.VimeoComment;
 import org.springframework.beans.factory.annotation.Autowired;

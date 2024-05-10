@@ -1,4 +1,4 @@
-package vimeominer.service;
+package vimeominer.vimeoservice;
 
 
 import vimeominer.model.VimeoVideo;
