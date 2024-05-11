@@ -26,8 +26,8 @@ public class Channel {
     @JsonProperty("videos")
     private List<Video> videos;
 
-    public Channel(String name, String description, String createdTime) {
-        this.id= this.id= UUID.randomUUID().toString();
+    public Channel(String id, String name, String description, String createdTime) {
+        this.id= this.id= id;
         this.name = name;
         this.description = description;
         this.createdTime = createdTime;

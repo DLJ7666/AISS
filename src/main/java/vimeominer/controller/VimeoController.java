@@ -66,7 +66,7 @@ public class VimeoController {
         }
         VimeoChannel channel = channelService.getVimeoChannel(vimeoChannelId);
         System.out.println(channel);
-        Channel canal = videoChannelService.creaCanal(channel.getName(), channel.getDescription(),
+        Channel canal = videoChannelService.creaCanal(channel.getId(), channel.getName(), channel.getDescription(),
                 channel.getCreatedTime());
         VimeoVideoList videoList = videoService.getVimeoVideoList(vimeoChannelId, null);
         List<VimeoVideo> videos = new ArrayList<>(videoList.getVideos());
@@ -74,9 +74,8 @@ public class VimeoController {
             videos.addAll(videoService.getVimeoVideoList(vimeoChannelId, i).getVideos());
         }
         for(VimeoVideo video:videos.stream().limit(numMaxVideos).toList()) {
-            Video v = videoVideoService.creaCanal(canal.getId().toString(), video.getName(),
-                    video.getDescription(),
-                    video.getReleasedTime());
+            Video v = videoVideoService.creaCanal(canal.getId(), video.getId(), video.getName(),
+                    video.getDescription(), video.getReleasedTime());
             VimeoTexttrackList captionList = captionService.getVimeoTexttrackList(video.getId(),
                     null);
             video.addTexttracks(captionList.getTexttracks());
@@ -85,8 +84,8 @@ public class VimeoController {
                                                   .getTexttracks());
             }
             for(VimeoTexttrack caption:video.getTexttracks()) {
-                Caption subtitulo = videoCaptionService.creaSubtitulo(canal.getId().toString(),
-                        v.getId().toString(),caption.getName(), caption.getLanguage());
+                Caption subtitulo = videoCaptionService.creaSubtitulo(canal.getId(), v.getId(), caption.getId(),
+                        caption.getName(), caption.getLanguage());
             }
             VimeoCommentList commentList = commentService.getVimeoCommentList(video.getId(),
                     null);
@@ -101,8 +100,8 @@ public class VimeoController {
                         pictureList.getPictures().get(0).getLink() : null;
                 User usuario = videoUserService.creaUsuario(user.getName(), user.getUserLink(),
                         pictureLink);
-                Comment comentario = videoCommentService.creaComentario(canal.getId().toString(),
-                        v.getId().toString(), comment.getText(), comment.getCreatedOn(), usuario);
+                Comment comentario = videoCommentService.creaComentario(canal.getId(), v.getId(), comment.getId(),
+                        comment.getText(), comment.getCreatedOn(), usuario);
             }
 
         }

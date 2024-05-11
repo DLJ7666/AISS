@@ -19,16 +19,12 @@ public class CaptionService {
     @Autowired
     RestTemplate restTemplate;
 
-    public Caption creaSubtitulo(String channelId, String videoId, String nombre, String lenguaje) {
+    public Caption creaSubtitulo(String channelId, String videoId, String captionId, String nombre,
+                                 String lenguaje) {
         Caption caption = null;
         String uri = String.format("http://localhost:42000/api/videominer/channels/%s/videos/%s/captions",
                 channelId, videoId);
-//        MultiValueMap<String,String> datos = new LinkedMultiValueMap<>();
-//        datos.put("name", new ArrayList<>());
-//        datos.put("language", new ArrayList<>());
-//        datos.add("name", nombre);
-//        datos.add("language", lenguaje);
-        Caption datos = new Caption(nombre, lenguaje);
+        Caption datos = new Caption(captionId, nombre, lenguaje);
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<Caption> request = new HttpEntity<>(datos, headers);
         ResponseEntity<Caption> response = restTemplate.exchange(uri, HttpMethod.POST, request, Caption.class);

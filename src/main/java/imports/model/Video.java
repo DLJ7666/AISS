@@ -28,8 +28,8 @@ public class Video {
     @JsonProperty("captions")
     private List<Caption> captions;
 
-    public Video( String name, String description, String releaseTime) {
-        this.id= UUID.randomUUID().toString();
+    public Video( String id, String name, String description, String releaseTime) {
+        this.id= id;
         this.name = name;
         this.description = description;
         this.releaseTime = releaseTime;

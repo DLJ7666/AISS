@@ -20,8 +20,8 @@ public class Comment {
     private User author;
 
 
-    public Comment(String text, String createdOn, User author) {
-        this.id= UUID.randomUUID().toString();
+    public Comment(String id,String text, String createdOn, User author) {
+        this.id= id;
         this.text = text;
         this.createdOn = createdOn;
         this.author = author;

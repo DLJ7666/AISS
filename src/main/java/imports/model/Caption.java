@@ -17,8 +17,8 @@ public class Caption {
     @JsonProperty("language")
     private String language;
 
-    public Caption(String name, String language) {
-        this.id= UUID.randomUUID().toString();
+    public Caption(String id, String name, String language) {
+        this.id= id;
         this.name = name;
         this.language = language;
     }

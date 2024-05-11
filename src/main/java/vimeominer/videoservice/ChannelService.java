@@ -16,10 +16,10 @@ public class ChannelService {
     @Autowired
     RestTemplate restTemplate;
 
-    public Channel creaCanal(String nombre, String descripcion, String fechaCreacion) {
+    public Channel creaCanal(String id, String nombre, String descripcion, String fechaCreacion) {
         Channel channel = null;
         String uri = "http://localhost:42000/api/videominer/channels";
-        Channel datos = new Channel(nombre,descripcion,fechaCreacion);
+        Channel datos = new Channel(id, nombre,descripcion,fechaCreacion);
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<Channel> request = new HttpEntity<>(datos, headers);
         ResponseEntity<Channel> response = restTemplate.exchange(uri, HttpMethod.POST, request, Channel.class);
