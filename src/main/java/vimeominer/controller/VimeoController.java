@@ -2,15 +2,12 @@ package vimeominer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import videominer.model.Caption;
-import videominer.model.Channel;
-import videominer.model.Comment;
-import videominer.model.User;
-import videominer.model.Video;
+import org.springframework.web.bind.annotation.*;
+import imports.model.Caption;
+import imports.model.Channel;
+import imports.model.Comment;
+import imports.model.User;
+import imports.model.Video;
 import vimeominer.model.*;
 import vimeominer.videoservice.*;
 import vimeominer.vimeoservice.*;
@@ -57,7 +54,7 @@ public class VimeoController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Channel create(String vimeoChannelId) {
+    public Channel create(@RequestParam("channelId") String vimeoChannelId) {
         VimeoChannel channel = channelService.getVimeoChannel(vimeoChannelId);
         Channel canal = videoChannelService.creaCanal(channel.getName(), channel.getDescription(),
                 channel.getCreatedTime());
