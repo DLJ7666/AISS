@@ -3,12 +3,12 @@ package imports.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import imports.model.User;
 
+import java.util.UUID;
+
 public class Comment {
 
-    private static Long nextId=1L;
-
     @JsonProperty("id")
-    private Long id;
+    private String id;
 
     @JsonProperty("text")
     private String text;
@@ -21,18 +21,17 @@ public class Comment {
 
 
     public Comment(String text, String createdOn, User author) {
-        this.id= nextId;
-        nextId++;
+        this.id= UUID.randomUUID().toString();
         this.text = text;
         this.createdOn = createdOn;
         this.author = author;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

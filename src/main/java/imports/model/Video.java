@@ -6,13 +6,12 @@ import imports.model.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Video {
 
-    private static Long nextId=1L;
-
     @JsonProperty("id")
-    private Long id;
+    private String id;
 
     @JsonProperty("name")
     private String name;
@@ -30,8 +29,7 @@ public class Video {
     private List<Caption> captions;
 
     public Video( String name, String description, String releaseTime) {
-        this.id= nextId;
-        nextId++;
+        this.id= UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.releaseTime = releaseTime;
@@ -39,11 +37,11 @@ public class Video {
         this.captions = new ArrayList<>();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -3,13 +3,13 @@ package imports.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.UUID;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Caption {
 
-    private static Long nextId = 1L;
-
     @JsonProperty("id")
-    private long id;
+    private String id;
 
     @JsonProperty("name")
     private String name;
@@ -18,17 +18,16 @@ public class Caption {
     private String language;
 
     public Caption(String name, String language) {
-        this.id= nextId;
-        nextId++;
+        this.id= UUID.randomUUID().toString();
         this.name = name;
         this.language = language;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
