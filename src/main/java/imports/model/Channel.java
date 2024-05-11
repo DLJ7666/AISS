@@ -10,7 +10,7 @@ import java.util.List;
 @JsonIgnoreProperties
 public class Channel {
 
-    private static Long nextId;
+    private static Long nextId=1L;
 
     @JsonProperty("id")
     private Long id;

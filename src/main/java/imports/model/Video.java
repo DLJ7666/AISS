@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Video {
 
-    private static Long nextId;
+    private static Long nextId=1L;
 
     @JsonProperty("id")
     private Long id;

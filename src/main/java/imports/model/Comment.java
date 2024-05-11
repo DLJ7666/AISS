@@ -5,7 +5,7 @@ import imports.model.User;
 
 public class Comment {
 
-    private static Long nextId;
+    private static Long nextId=1L;
 
     @JsonProperty("id")
     private Long id;
