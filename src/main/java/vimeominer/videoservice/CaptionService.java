@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import videominer.model.Caption;
+import imports.model.Caption;
 
 import java.util.ArrayList;
 
