@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Caption {
 
+    private static Long nextId = 1L;
+
     @JsonProperty("id")
     private long id;
 
@@ -16,6 +18,8 @@ public class Caption {
     private String language;
 
     public Caption(String name, String language) {
+        this.id= nextId;
+        nextId++;
         this.name = name;
         this.language = language;
     }

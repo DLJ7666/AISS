@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Video {
 
+    private static Long nextId;
+
     @JsonProperty("id")
     private Long id;
 
@@ -28,6 +30,8 @@ public class Video {
     private List<Caption> captions;
 
     public Video( String name, String description, String releaseTime) {
+        this.id= nextId;
+        nextId++;
         this.name = name;
         this.description = description;
         this.releaseTime = releaseTime;

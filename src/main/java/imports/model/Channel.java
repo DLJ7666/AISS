@@ -10,6 +10,8 @@ import java.util.List;
 @JsonIgnoreProperties
 public class Channel {
 
+    private static Long nextId;
+
     @JsonProperty("id")
     private Long id;
 
@@ -26,6 +28,8 @@ public class Channel {
     private List<Video> videos;
 
     public Channel(String name, String description, String createdTime) {
+        this.id= nextId;
+        nextId++;
         this.name = name;
         this.description = description;
         this.createdTime = createdTime;

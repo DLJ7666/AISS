@@ -5,6 +5,8 @@ import imports.model.User;
 
 public class Comment {
 
+    private static Long nextId;
+
     @JsonProperty("id")
     private Long id;
 
@@ -19,6 +21,8 @@ public class Comment {
 
 
     public Comment(String text, String createdOn, User author) {
+        this.id= nextId;
+        nextId++;
         this.text = text;
         this.createdOn = createdOn;
         this.author = author;
