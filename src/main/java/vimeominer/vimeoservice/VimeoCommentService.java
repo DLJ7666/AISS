@@ -1,5 +1,6 @@
 package vimeominer.vimeoservice;
 
+import org.springframework.stereotype.Service;
 import vimeominer.model.VimeoComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,6 +13,7 @@ import vimeominer.model.VimeoCommentList;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class VimeoCommentService {
 
     @Autowired

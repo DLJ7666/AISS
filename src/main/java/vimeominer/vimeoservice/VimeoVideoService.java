@@ -1,6 +1,7 @@
 package vimeominer.vimeoservice;
 
 
+import org.springframework.stereotype.Service;
 import vimeominer.model.VimeoVideo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -13,6 +14,7 @@ import vimeominer.model.VimeoVideoList;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class VimeoVideoService {
     @Autowired
     RestTemplate restTemplate;

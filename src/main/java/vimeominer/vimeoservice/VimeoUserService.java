@@ -1,6 +1,7 @@
 package vimeominer.vimeoservice;
 
 
+import org.springframework.stereotype.Service;
 import vimeominer.model.VimeoUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class VimeoUserService {
 
     @Autowired
