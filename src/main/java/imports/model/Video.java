@@ -27,8 +27,7 @@ public class Video {
     @JsonProperty("captions")
     private List<Caption> captions;
 
-    public Video(Long id, String name, String description, String releaseTime) {
-        this.id = id;
+    public Video( String name, String description, String releaseTime) {
         this.name = name;
         this.description = description;
         this.releaseTime = releaseTime;
