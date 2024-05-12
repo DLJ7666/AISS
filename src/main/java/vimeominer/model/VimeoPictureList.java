@@ -3,6 +3,7 @@ package vimeominer.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -25,6 +26,17 @@ public class VimeoPictureList {
         this.pagina = pagina;
         this.elemPorPag = elemPorPag;
         this.pictures = pictures;
+    }
+
+    public VimeoPictureList(Integer total, Integer pagina, Integer elemPorPag) {
+        this.total = total;
+        this.pagina = pagina;
+        this.elemPorPag = elemPorPag;
+        this.pictures = new ArrayList<>();
+    }
+
+    public  VimeoPictureList() {
+        this.pictures = new ArrayList<>();
     }
 
     public Integer getTotal() {

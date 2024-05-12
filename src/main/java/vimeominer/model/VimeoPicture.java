@@ -12,6 +12,10 @@ public class VimeoPicture {
     @JsonProperty("base_link")
     private String link;
 
+    public VimeoPicture(String uri, String link) {
+        this.uri = uri;
+        this.link = link;
+    }
 
     public String getUri() { return uri; }
 
