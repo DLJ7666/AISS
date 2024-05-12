@@ -8,6 +8,7 @@ import imports.model.Channel;
 import imports.model.Comment;
 import imports.model.User;
 import imports.model.Video;
+import org.springframework.web.client.HttpClientErrorException;
 import vimeominer.model.*;
 import vimeominer.videoservice.*;
 import vimeominer.vimeoservice.*;
@@ -56,7 +57,9 @@ public class VimeoController {
     @PostMapping("/{vimeoChannelId}")
     public Channel create(@PathVariable String vimeoChannelId,
                       @RequestParam(name = "maxVideos", required = false) Integer maxVideos,
-                      @RequestParam(name = "maxComments", required = false) Integer maxComments) {
+                      @RequestParam(name = "maxComments", required = false) Integer maxComments)
+                    throws HttpClientErrorException {
+        Channel canal;
         long numMaxVideos = 10L, numMaxComments = 10L;
         if (maxVideos!=null) {
             numMaxVideos = maxVideos.longValue();
@@ -65,35 +68,35 @@ public class VimeoController {
             numMaxComments = maxComments.longValue();
         }
         VimeoChannel channel = channelService.getVimeoChannel(vimeoChannelId);
-        System.out.println(channel);
-        Channel canal = videoChannelService.creaCanal(channel.getId(), channel.getName(), channel.getDescription(),
+        canal = videoChannelService.creaCanal(channel.getId(), channel.getName(), channel.getDescription(),
                 channel.getCreatedTime());
         VimeoVideoList videoList = videoService.getVimeoVideoList(vimeoChannelId, null);
         List<VimeoVideo> videos = new ArrayList<>(videoList.getVideos());
-        for(int i=2; i<=videoList.getNumPags() && videos.size() <=numMaxVideos; i++) {
+        for (int i = 2; i <= videoList.getNumPags() && videos.size() <= numMaxVideos; i++) {
             videos.addAll(videoService.getVimeoVideoList(vimeoChannelId, i).getVideos());
         }
-        for(VimeoVideo video:videos.stream().limit(numMaxVideos).toList()) {
-            Video v = videoVideoService.creaCanal(canal.getId(), video.getId(), video.getName(),
+        for (VimeoVideo video : videos.stream().limit(numMaxVideos).toList()) {
+            Video v;
+            v = videoVideoService.creaCanal(canal.getId(), video.getId(), video.getName(),
                     video.getDescription(), video.getReleasedTime());
             VimeoTexttrackList captionList = captionService.getVimeoTexttrackList(video.getId(),
                     null);
             video.addTexttracks(captionList.getTexttracks());
-            for(int i=2; i<=captionList.getNumPags(); i++) {
+            for (int i = 2; i <= captionList.getNumPags(); i++) {
                 video.addTexttracks(captionService.getVimeoTexttrackList(video.getId(), i)
-                                                  .getTexttracks());
+                        .getTexttracks());
             }
-            for(VimeoTexttrack caption:video.getTexttracks()) {
+            for (VimeoTexttrack caption : video.getTexttracks()) {
                 Caption subtitulo = videoCaptionService.creaSubtitulo(canal.getId(), v.getId(), caption.getId(),
                         caption.getName(), caption.getLanguage());
             }
             VimeoCommentList commentList = commentService.getVimeoCommentList(video.getId(),
                     null);
             List<VimeoComment> comments = new ArrayList<>(commentList.getComments());
-            for(int i=2; i<=commentList.getNumPags() && comments.size()<=numMaxComments; i++) {
+            for (int i = 2; i <= commentList.getNumPags() && comments.size() <= numMaxComments; i++) {
                 comments.addAll(commentService.getVimeoCommentList(video.getId(), i).getComments());
             }
-            for(VimeoComment comment:comments.stream().limit(numMaxComments).toList()) {
+            for (VimeoComment comment : comments.stream().limit(numMaxComments).toList()) {
                 VimeoUser user = userService.getVimeoUser(comment.getUser().getId());
                 VimeoPictureList pictureList = pictureLinkService.getVimeoPictureList(user.getId());
                 String pictureLink = !pictureList.getPictures().isEmpty() ?
@@ -103,7 +106,6 @@ public class VimeoController {
                 Comment comentario = videoCommentService.creaComentario(canal.getId(), v.getId(), comment.getId(),
                         comment.getText(), comment.getCreatedOn(), usuario);
             }
-
         }
         /*
         GET /channels/{vimeoChannelId}
