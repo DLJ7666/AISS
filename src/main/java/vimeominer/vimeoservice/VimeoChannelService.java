@@ -24,7 +24,6 @@ public class VimeoChannelService {
     public VimeoChannel getVimeoChannel(String id) {
         VimeoChannel res = null;
         String uri = String.format("https://api.vimeo.com/channels/%s", id);
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + TOKEN);
         HttpEntity<VimeoChannel> request = new HttpEntity<>(null, headers);
