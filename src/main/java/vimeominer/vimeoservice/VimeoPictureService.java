@@ -24,7 +24,7 @@ public class VimeoPictureService {
 
     public VimeoPicture getVimeoPicture(String userId, String pictureId) {
         VimeoPicture res = null;
-        String uri = String.format("https://api.vimeo.com/user/%s/pictures/%s", userId, pictureId);
+        String uri = String.format("https://api.vimeo.com/users/%s/pictures/%s", userId, pictureId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer" + TOKEN);
@@ -40,7 +40,7 @@ public class VimeoPictureService {
 
     public List<VimeoPicture> getVimeoPictures(String userId) {
         List<VimeoPicture> res = new ArrayList<>();
-        String uri = String.format("https://api.vimeo.com/user/%s/pictures", userId);
+        String uri = String.format("https://api.vimeo.com/users/%s/pictures", userId);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + TOKEN);
         HttpEntity<VimeoPicture> request = new HttpEntity<>(null, headers);
@@ -54,7 +54,7 @@ public class VimeoPictureService {
 
     public VimeoPictureList getVimeoPictureList(String userId) {
         VimeoPictureList res = null;
-        String uri = String.format("https://api.vimeo.com/user/%s/pictures", userId);
+        String uri = String.format("https://api.vimeo.com/users/%s/pictures", userId);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + TOKEN);
         HttpEntity<VimeoPictureList> request = new HttpEntity<>(null, headers);

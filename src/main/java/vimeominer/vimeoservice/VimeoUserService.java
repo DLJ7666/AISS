@@ -26,7 +26,7 @@ public class VimeoUserService {
         String uri = String.format("https://api.vimeo.com/users/%s", id);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer" + TOKEN);
+        headers.set("Authorization", "Bearer " + TOKEN);
         HttpEntity<VimeoUser> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<VimeoUser> response = restTemplate.exchange(uri, HttpMethod.GET, request, VimeoUser.class);
