@@ -3,6 +3,7 @@ package vimeominer.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -18,9 +19,9 @@ public class VimeoUser {
     private String userLink;
 
     @JsonProperty("pictures")
-    private List<VimeoPicture> pictures;
+    private VimeoPictureList pictures;
 
-    public VimeoUser(String uri, String name, String userLink, List<VimeoPicture> pictures) {
+    public VimeoUser(String uri, String name, String userLink, VimeoPictureList pictures) {
         this.uri = uri;
         this.name = name;
         this.userLink = userLink;
@@ -47,11 +48,11 @@ public class VimeoUser {
         this.userLink = userLink;
     }
 
-    public List<VimeoPicture> getPictures() {
+    public VimeoPictureList getPictures() {
         return pictures;
     }
 
-    public void setPictures(List<VimeoPicture> pictures) {
+    public void setPictures(VimeoPictureList pictures) {
         this.pictures = pictures;
     }
 
