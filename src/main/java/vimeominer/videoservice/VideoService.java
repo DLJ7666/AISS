@@ -15,7 +15,7 @@ public class VideoService {
     @Autowired
     RestTemplate restTemplate;
 
-    public Video creaCanal(String channelId, String videoId, String nombre, String descripcion, String subidoEn) {
+    public Video creaVideo(String channelId, String videoId, String nombre, String descripcion, String subidoEn) {
         Video video = null;
         String uri = String.format("http://localhost:42000/api/videominer/channels/%s/videos",
                 channelId);

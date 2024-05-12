@@ -77,7 +77,7 @@ public class VimeoController {
         }
         for (VimeoVideo video : videos.stream().limit(numMaxVideos).toList()) {
             Video v;
-            v = videoVideoService.creaCanal(canal.getId(), video.getId(), video.getName(),
+            v = videoVideoService.creaVideo(canal.getId(), video.getId(), video.getName(),
                     video.getDescription(), video.getReleasedTime());
             VimeoTexttrackList captionList = captionService.getVimeoTexttrackList(video.getId(),
                     null);
